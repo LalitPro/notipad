@@ -83,7 +83,7 @@ function Note() {
             value={title}
             placeholder="Note Title"
             onChange={(e) => setTitle(e.target.value)}
-            className="text-3xl font-semibold transition-colors bg-transparent border-b-2 outline-none border-blue-400/30 focus:border-blue-400"
+            className="text-3xl font-semibold transition-colors bg-transparent border-b-2 outline-none max-w-60 border-blue-400/30 focus:border-blue-400"
             readOnly={!isOwner}
           />
         </div>
