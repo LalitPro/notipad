@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import { db, auth } from "../firebase"; // Ensure Firebase Auth is configured
+import { db, auth } from "../firebase";
 import {
   collection,
   addDoc,
@@ -9,6 +9,7 @@ import {
   doc,
   query,
   where,
+  getDoc,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -52,6 +53,20 @@ function NotesProvider({ children }) {
     }
   };
 
+  // Fetch a public note by its ID
+  const fetchPublicNote = async (id) => {
+    try {
+      const noteDoc = doc(db, "notes", id);
+      const noteSnap = await getDoc(noteDoc);
+      if (noteSnap.exists()) {
+        return { id: noteSnap.id, ...noteSnap.data() }; // Include userId in data
+      }
+    } catch (error) {
+      console.error("Error fetching public note:", error);
+    }
+    return null;
+  };
+
   // Save a note (update)
   const handleNoteSave = async (id, text) => {
     try {
@@ -69,7 +84,7 @@ function NotesProvider({ children }) {
     if (!user) return;
 
     try {
-      const newNote = { title, note: text, uid: user.uid }; // Associate note with user ID
+      const newNote = { title, note: text, uid: user.uid, isPublic: false }; // Default: not public
       const docRef = await addDoc(collection(db, "notes"), newNote);
       console.log("Note added with ID:", docRef.id);
       fetchNotes(user.uid);
@@ -90,6 +105,35 @@ function NotesProvider({ children }) {
     }
   };
 
+  // Toggle public visibility of a note
+  const toggleNotePublic = async (id, isPublic) => {
+    try {
+      const noteDoc = doc(db, "notes", id);
+      await updateDoc(noteDoc, { isPublic });
+      console.log(
+        `Note visibility updated to ${isPublic ? "Public" : "Private"}`
+      );
+      if (user) fetchNotes(user.uid); // Refresh notes
+    } catch (error) {
+      console.error("Error updating note visibility:", error);
+    }
+  };
+
+  const handleTitleSave = async (id, newTitle) => {
+    if (!id || typeof id !== "string") {
+      console.error("Invalid note ID:", id);
+      return;
+    }
+    try {
+      const noteDoc = doc(db, "notes", id);
+      await updateDoc(noteDoc, { title: newTitle });
+      console.log("Note title updated successfully");
+      fetchNotes(); // Refresh notes to reflect changes
+    } catch (error) {
+      console.error("Error updating note title:", error);
+    }
+  };
+
   return (
     <NotesContext.Provider
       value={{
@@ -98,6 +142,9 @@ function NotesProvider({ children }) {
         handleNoteSave,
         handleAddNote,
         handleDeleteNote,
+        toggleNotePublic,
+        handleTitleSave,
+        fetchPublicNote,
       }}
     >
       {children}
