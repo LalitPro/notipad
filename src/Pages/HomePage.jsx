@@ -23,9 +23,11 @@ function HomePage({ user }) {
 
   return (
     <div className="flex flex-col items-center min-h-screen p-6 text-white sm:p-8">
-      <h1 className="mb-8 text-5xl font-bold tracking-wider text-transparent transition-transform bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 sm:text-6xl sm:mb-10 hover:scale-105">
-        NOTIPAD
-      </h1>
+      <div>
+        <h1 className="mb-8 text-5xl font-bold tracking-wider text-transparent transition-transform bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 sm:text-6xl sm:mb-10 hover:scale-105">
+          NOTIPAD
+        </h1>
+      </div>
 
       {user && (
         <h2 className="mb-6 text-2xl font-light">
