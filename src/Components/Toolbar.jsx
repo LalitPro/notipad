@@ -8,7 +8,7 @@ function Toolbar({ text, addText }) {
         <IoReload className="duration-100 hover:scale-125" />
       </a>
       <IoCopyOutline
-        onClick={navigator.clipboard.writeText(text)}
+        onClick={()=>{navigator.clipboard.writeText(text)}}
         className="duration-100 hover:scale-125"
       />
       <IoClipboardOutline

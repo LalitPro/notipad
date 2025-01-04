@@ -12,7 +12,8 @@ import { NotesContext } from "../Contexts/NotesProvider";
 import { Link } from "react-router";
 
 function HomePage() {
-  const { notes, setNotes, handleDeleteNote } = useContext(NotesContext);
+  const { notes, setNotes, handleAddNote, handleDeleteNote } =
+    useContext(NotesContext);
 
   const [addNewNotePopUp, setAddNewNotePopUp] = useState(false);
 
@@ -50,7 +51,9 @@ function HomePage() {
               key={index}
             />
           ))}
-        {}
+        {notes.length > 1 && (
+          <p className="text-base italic sm:text-lg">No Notes Found</p>
+        )}
       </div>
 
       <div className="space-y-3 sm:space-y-4">
@@ -80,14 +83,7 @@ function HomePage() {
               />
               <button
                 onClick={() => {
-                  setNotes([
-                    ...notes,
-                    {
-                      title: createNewInput.current.value,
-                      note: "",
-                      id: notes.length + 1,
-                    },
-                  ]);
+                  handleAddNote(createNewInput.current.value, "");
                   setAddNewNotePopUp(false);
                 }}
                 className="px-3 py-2 text-2xl sm:px-4"
