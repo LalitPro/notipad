@@ -10,7 +10,7 @@ const Auth = ({ setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [isNewUser, setIsNewUser] = useState(true);
+  const [isNewUser, setIsNewUser] = useState(false);
 
   const [error, setError] = useState("");
 
@@ -37,6 +37,10 @@ const Auth = ({ setUser }) => {
   return (
     <div className="flex items-center justify-center min-h-screen text-white bg-gradient-to-br from-gray-900 to-black">
       <div className="w-full max-w-md p-8 space-y-6 rounded-lg bg-black/40 backdrop-blur-sm">
+        <h1 className="flex items-center justify-center gap-4 space-x-2 text-4xl font-bold text-white">
+          <img src="./logo.webp" className="rounded-xl h-14" alt="Logo" />
+          NOTIPAD
+        </h1>
         <h1 className="text-3xl font-bold text-center text-blue-400">
           {isNewUser ? "Create Account" : "Welcome Back"}
         </h1>
