@@ -32,7 +32,9 @@ function HomePage({ user }) {
       {user && (
         <h2 className="mb-6 text-2xl font-light">
           Welcome back,{" "}
-          <span className="font-semibold text-purple-400">{user.name}</span>
+          <span className="font-semibold text-purple-400">
+            {user.displayName}
+          </span>
         </h2>
       )}
 
@@ -82,7 +84,7 @@ function HomePage({ user }) {
 
         <div className="my-10">
           {addNewNotePopUp && (
-            <div className="flex items-center w-full gap-3 p-2 overflow-hidden duration-200 bg-gray-800 bg-opacity-50 border-2 border-purple-500 bg-gradient-to-b from-gray-900 to-black rounded-xl hover:scale-105">
+            <div className="relative flex items-center w-full gap-3 p-2 overflow-hidden duration-200 bg-gray-800 bg-opacity-50 border-2 border-purple-500 bg-gradient-to-b from-gray-900 to-black rounded-xl hover:scale-105">
               <MdClose
                 className="text-2xl text-gray-400 cursor-pointer hover:text-white"
                 onClick={() => setAddNewNotePopUp(false)}
@@ -98,7 +100,7 @@ function HomePage({ user }) {
                   handleAddNote(createNewInput.current.value, "");
                   setAddNewNotePopUp(false);
                 }}
-                className="p-2 text-2xl text-purple-400 transition-colors rounded-lg hover:text-pink-500 hover:bg-gray-700"
+                className="absolute right-0 p-2 mr-2 text-2xl text-purple-400 transition-colors bg-white rounded-lg hover:text-pink-500 hover:bg-gray-700"
               >
                 <MdAdd />
               </button>

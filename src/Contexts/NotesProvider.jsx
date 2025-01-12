@@ -22,7 +22,7 @@ function NotesProvider({ children }) {
   // Listen to authentication state changes
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
+      if (currentUser != null) {
         setUser(currentUser);
         fetchNotes(currentUser.uid);
       } else {
@@ -145,6 +145,8 @@ function NotesProvider({ children }) {
         toggleNotePublic,
         handleTitleSave,
         fetchPublicNote,
+        user,
+        setUser,
       }}
     >
       {children}
